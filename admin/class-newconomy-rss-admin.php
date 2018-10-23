@@ -51,8 +51,32 @@ class Newconomy_Rss_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+		$this->options_page();
 	}
+
+	public function options_page() {
+        add_action('admin_menu', function () {
+            $page_title = 'Newconomy RSS Options';
+            $menu_title = 'Newconomy RSS Options';
+            $capability = 'edit_posts';
+            $menu_slug = 'newconomy-rss-options';
+            $function = array($this, 'newconomy_rss_options_display');
+            $icon_url = '';
+            $position = 24;
+            add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
+        });
+    }
+
+    public function newconomy_rss_options_display() {
+        if (isset($_POST['newconomy_rss_options_channel'])) {
+            $newconomy_rss_options_channel = $_POST['newconomy_rss_options_channel'];
+            update_option('newconomy_rss_options_channel', $newconomy_rss_options_channel);
+        }
+
+        $newconomy_rss_options_channel = get_option('newconomy_rss_options_channel', '');
+
+        include 'partials/newconomy-rss-admin-display.php';
+    }
 
 	/**
 	 * Register the stylesheets for the admin area.

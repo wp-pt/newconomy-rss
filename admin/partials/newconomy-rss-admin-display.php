@@ -14,3 +14,12 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+
+<div class="wrap">
+    <h1>My Awesome Settings Page</h1>
+    <form method="POST">
+        <label for="newconomy_rss_options_channel">Channel</label>
+        <input type="text" name="newconomy_rss_options_channel" id="newconomy_rss_options_channel" value="<?php echo $newconomy_rss_options_channel; ?>">
+        <input type="submit" value="Save" class="button button-primary button-large">
+    </form>
+</div>
