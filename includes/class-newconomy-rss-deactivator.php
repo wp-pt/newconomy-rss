@@ -20,17 +20,17 @@
  * @subpackage Newconomy_Rss/includes
  * @author     Zorca Orcinus <vs@zorca.org>
  */
-class Newconomy_Rss_Deactivator {
+class Newconomy_Rss_Deactivator
+{
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function deactivate() {
-
-	}
-
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     *
+     * @since    1.0.0
+     */
+    public static function deactivate()
+    {
+    }
 }

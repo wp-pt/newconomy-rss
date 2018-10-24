@@ -20,17 +20,17 @@
  * @subpackage Newconomy_Rss/includes
  * @author     Zorca Orcinus <vs@zorca.org>
  */
-class Newconomy_Rss_Activator {
+class Newconomy_Rss_Activator
+{
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function activate() {
-
-	}
-
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     *
+     * @since    1.0.0
+     */
+    public static function activate()
+    {
+    }
 }
