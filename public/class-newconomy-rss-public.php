@@ -41,6 +41,8 @@ class Newconomy_Rss_Public
      */
     private $version;
 
+    private $rss_url;
+
     /**
      * Initialize the class and set its properties.
      *
@@ -53,13 +55,20 @@ class Newconomy_Rss_Public
         $this->plugin_name = $plugin_name;
         $this->version = $version;
 
+        $this->rss_url = get_option('newconomy_rss_options_channel', 'https://zapier.com/engine/rss/612190/NCMfeed/');
+
+        add_action( 'init', array($this, 'add_rewrite_rules') );
+
         add_filter( 'wp_feed_cache_transient_lifetime', array($this, 'speed_up_feed'), 10, 2 );
 
+        add_filter('query_vars', array($this, 'add_rss_item_var'), 0, 1);
+
         add_shortcode('newconomy_rss', array($this, 'rss_print'));
+        add_shortcode('newconomy_rss_item', array($this, 'rss_item_print'));
     }
 
     public function get_rss() {
-        $rss = fetch_feed('https://zapier.com/engine/rss/612190/NCMfeed/');
+        $rss = fetch_feed($this->rss_url);
 
         if( ! is_wp_error( $rss ) ) {
             $rss_items = $rss->get_items(0, $rss->get_item_quantity(10));
@@ -76,9 +85,32 @@ class Newconomy_Rss_Public
         return $output;
     }
 
-    function speed_up_feed( $interval, $url ) {
-        if( 'https://zapier.com/engine/rss/612190/NCMfeed/' == $url ) return 900;
+    public function rss_item_print() {
+        $rss_items = $this->get_rss();
+        $rss_item_current_id = get_query_var('rss_item_guid');
+        $rss_item_current = false;
+        foreach ( $rss_items as $rss_item ) {
+            if ($rss_item->get_id() == $rss_item_current_id) $rss_item_current = $rss_item;
+        }
+        ob_start();
+        include 'partials/newconomy-rss-public-display-item.php';
+        $output = ob_get_clean();
+        return $output;
+    }
+
+    public function speed_up_feed( $interval, $url ) {
+        if( $this->rss_url == $url ) return 900;
         return $interval;
+    }
+
+    public function add_rss_item_var($vars) {
+        $vars[] = 'rss_item_guid';
+        return $vars;
+    }
+
+    public function add_rewrite_rules() {
+        add_rewrite_rule('^rss-item/([^/]*)/?','index.php?post_type=page&pagename=rss-item&rss_item_guid=$matches[1]','top');
+        add_rewrite_tag('%rss_item_guid%','([^&]+)');
     }
 
     /**
