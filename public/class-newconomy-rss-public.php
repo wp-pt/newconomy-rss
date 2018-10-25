@@ -63,6 +63,13 @@ class Newconomy_Rss_Public
 
         add_filter('query_vars', array($this, 'add_rss_item_var'), 0, 1);
 
+        add_filter( 'wpseo_robots', function ( $robots ) {
+            if ( is_page('rss-item') ) {
+                return 'noindex,follow';
+            }
+            return $robots;
+        });
+
         add_shortcode('newconomy_rss', array($this, 'rss_print'));
         add_shortcode('newconomy_rss_item', array($this, 'rss_item_print'));
     }
