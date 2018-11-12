@@ -74,11 +74,11 @@ class Newconomy_Rss_Public
         add_shortcode('newconomy_rss_item', array($this, 'rss_item_print'));
     }
 
-    public function get_rss() {
+    public function get_rss($quantity = 10) {
         $rss = fetch_feed($this->rss_url);
 
         if( ! is_wp_error( $rss ) ) {
-            $rss_items = $rss->get_items(0, $rss->get_item_quantity(10));
+            $rss_items = $rss->get_items(0, $rss->get_item_quantity($quantity));
             return $rss_items;
         }
         return false;
@@ -93,7 +93,7 @@ class Newconomy_Rss_Public
     }
 
     public function rss_item_print() {
-        $rss_items = $this->get_rss();
+        $rss_items = $this->get_rss(50);
         $rss_item_current_id = get_query_var('rss_item_guid');
         $rss_item_current = false;
         foreach ( $rss_items as $rss_item ) {
