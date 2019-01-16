@@ -16,7 +16,7 @@
  * Plugin Name:       Newconomy RSS
  * Plugin URI:        https://oxboot.org/newconomy-rss
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Author:            Zorca Orcinus
  * Author URI:        https://zorca.org
  * License:           GPL-2.0+
